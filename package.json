@@ -1,0 +1,39 @@
+{
+  "name": "madcampweek3-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "studio": "npx prisma studio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/townlog/MadcampWeek3-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/townlog/MadcampWeek3-back/issues"
+  },
+  "homepage": "https://github.com/townlog/MadcampWeek3-back#readme",
+  "dependencies": {
+    "@prisma/client": "^3.7.0",
+    "aws-sdk": "^2.1053.0",
+    "axios": "^0.24.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "nodemon": "^2.0.15",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "prettier-plugin-prisma": "^3.7.0",
+    "prisma": "^3.7.0"
+  }
+}
