@@ -9,3 +9,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id              Int      @id @default(autoincrement())
+  kakaoId         String   @unique @db.VarChar(20)
+  nickname        String   @db.VarChar(20)
+  houseName       String   @db.VarChar(20)
+  friends         Friend[] @relation("frinedUser")
+  friendsRelation Friend[] @relation("userFriend")
+}
+
+model Friend {
+  user     User @relation(fields: [userId], references: [id], name: "frinedUser")
+  userId   Int
+  friend   User @relation(fields: [friendId], references: [id], name: "userFriend")
+  friendId Int
+  accept   Int
+
+  @@id([userId, friendId])
+}
