@@ -1,4 +1,4 @@
-import { addPhoto } from "../utils/furnitures.js";
+import { addPhoto, getPhotobyUser } from "../utils/furnitures.js";
 
 export const createBook = async (req, res) => {
   const userId = res.locals.user.id;
@@ -22,4 +22,10 @@ export const createPhoto = async (req, res) => {
   const userId = res.locals.user.id;
   const photo = await addPhoto({ userId, ...req.body });
   res.json({ status: true, photo });
+};
+
+export const getPhotos = async (req, res) => {
+  const user = res.locals.user;
+  const photos = await getPhotobyUser(user);
+  res.json({ status: true, photos });
 };

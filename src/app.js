@@ -12,7 +12,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use("/users", userRouter);
 app.use("/friends", friendRouter);
-app.use("/photos", furnitureRouter);
+app.use("/furnitures", furnitureRouter);
 
 app.get("", (req, res) => {
   res.send("HIHI");

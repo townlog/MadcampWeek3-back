@@ -26,7 +26,7 @@ export const addMusic = async (info) => {
 
 export const addTravel = async (info) => {
   const { userId, title, body } = info;
-  const travle = await client.travel.create({
+  const travel = await client.travel.create({
     data: {
       userId,
       title,
@@ -46,4 +46,17 @@ export const addPhoto = async (info) => {
     },
   });
   return photo;
+};
+
+export const getPhotobyUser = async (user) => {
+  const userId = user.id;
+  const photos = await client.photo.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+    },
+  });
+  return photos;
 };
