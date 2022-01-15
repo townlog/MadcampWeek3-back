@@ -17,6 +17,10 @@ model User {
   houseName       String   @db.VarChar(20)
   friends         Friend[] @relation("frinedUser")
   friendsRelation Friend[] @relation("userFriend")
+  books           Book[]
+  musics          Music[]
+  travels         Travel[]
+  photos          Photo[]
 }
 
 model Friend {
@@ -27,4 +31,36 @@ model Friend {
   accept   Int
 
   @@id([userId, friendId])
+}
+
+model Book {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  title  String @db.VarChar(100)
+  body   String @db.Text
+}
+
+model Music {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  title  String @db.VarChar(100)
+  body   String @db.Text
+}
+
+model Travel {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  title  String @db.VarChar(100)
+  body   String @db.Text
+}
+
+model Photo {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  title  String @db.VarChar(100)
+  body   String @db.Text
 }
