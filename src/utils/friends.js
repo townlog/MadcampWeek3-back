@@ -88,6 +88,7 @@ export const searchFriendWithName = async (nickname) => {
     select: {
       id: true,
       nickname: true,
+      houseName: true,
     },
   });
   return friend;

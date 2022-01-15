@@ -41,6 +41,7 @@ export const getUserByJWT = async (token) => {
       select: {
         id: true,
         nickname: true,
+        houseName: true,
       },
     });
     if (user) {
