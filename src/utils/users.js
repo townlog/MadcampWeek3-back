@@ -1,11 +1,22 @@
 import jwt from "jsonwebtoken";
 import client from "../client.js";
 
-export const getUserIdByKakaoId = async (kakaoId) => {
-  const user = await client.user.findUnique({
+export const getUserByLogin = async ({ loginId, loginPw }) => {
+  const user = await client.user.findFirst({
     where: {
-      kakaoId,
+      loginId,
     },
+    select: {
+      id: true,
+      loginPw: true,
+    },
+  });
+  return user;
+};
+
+export const addUser = async (info) => {
+  const user = await client.user.create({
+    data: info,
     select: {
       id: true,
     },
@@ -17,14 +28,6 @@ export const getUserIdByKakaoId = async (kakaoId) => {
 export const isUserExistsByUserId = async (userId) => {
   const user = await client.user.findUnique({
     where: { id: userId },
-    select: { id: true },
-  });
-  return user !== null;
-};
-
-export const isUserExistsByKakaoId = async (kakaoId) => {
-  const user = await client.user.findUnique({
-    where: { kakaoId },
     select: { id: true },
   });
   return user !== null;

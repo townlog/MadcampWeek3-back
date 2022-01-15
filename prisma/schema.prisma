@@ -12,7 +12,8 @@ datasource db {
 
 model User {
   id              Int      @id @default(autoincrement())
-  kakaoId         String   @unique @db.VarChar(20)
+  loginId         String   @unique @db.VarChar(20)
+  loginPw         String
   nickname        String   @db.VarChar(20)
   houseName       String   @db.VarChar(20)
   friends         Friend[] @relation("frinedUser")
