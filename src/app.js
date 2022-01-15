@@ -4,6 +4,7 @@ import cors from "cors";
 import userRouter from "./routes/users.js";
 import friendRouter from "./routes/friends.js";
 import furnitureRouter from "./routes/furnitures.js";
+import { issueJWT } from "./utils/users.js";
 
 const app = express();
 
@@ -14,8 +15,15 @@ app.use("/users", userRouter);
 app.use("/friends", friendRouter);
 app.use("/furnitures", furnitureRouter);
 
-app.get("", (req, res) => {
-  res.send("HIHI");
+app.post("", async (req, res) => {
+  const { id, password } = req.body;
+  console.log(`id, password`, id, password);
+  const { token } = issueJWT(1);
+  if (id === "test" && password === "password") {
+    console.log("Success");
+    return res.json({ status: true, token });
+  }
+  res.json({ status: false });
 });
 
 app.listen(5000, () => {

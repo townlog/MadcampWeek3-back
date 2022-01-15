@@ -1,34 +1,18 @@
-import axios from "axios";
 import client from "../client.js";
 import {
-  getUserIdByKakaoId,
   issueJWT,
   isNicknameAvailable,
+  getUserByLogin,
 } from "../utils/users.js";
-import { isUserExistsByKakaoId } from "../utils/users.js";
-
-const getKakaoId = async (accessToken) => {
-  const response = await axios.get("https://kapi.kakao.com/v2/user/me", {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  const kakaoId = String(response.data.id);
-  return kakaoId;
-};
+import bcrypt from "bcrypt";
 
 export const loginUser = async (req, res) => {
-  const accessToken = req.body.accessToken;
-  let kakaoId;
-  try {
-    kakaoId = await getKakaoId(accessToken);
-  } catch (e) {
-    res.json({ status: false });
-    return;
-  }
+  const { loginId, loginPw } = req.body;
 
-  const userId = await getUserIdByKakaoId(kakaoId);
+  const user = await getUserByLogin({ loginId });
 
-  if (userId) {
-    const jwt = issueJWT(userId);
+  if (await bcrypt.compare(loginPw, user?.loginPw)) {
+    const jwt = issueJWT(user.id);
     res.json({ status: true, ...jwt });
   } else {
     res.json({ register: false });
@@ -36,24 +20,12 @@ export const loginUser = async (req, res) => {
 };
 
 export const registerUser = async (req, res) => {
-  const accessToken = req.body.accessToken;
-  let kakaoId;
-  try {
-    kakaoId = await getKakaoId(accessToken);
-  } catch (e) {
-    return res.json({ status: false });
-  }
-  console.log(`kakaoId`, kakaoId);
-
-  if (await isUserExistsByKakaoId(kakaoId)) {
-    return res.json({ status: false });
-  }
-
-  delete req.body["accessToken"];
+  const { loginPw } = req.body;
+  const hashedPassword = await bcrypt.hash(loginPw, 10);
 
   const userId = (
     await client.user.create({
-      data: { ...req.body, kakaoId },
+      data: { ...req.body, loginPw: hashedPassword },
       select: { id: true },
     })
   ).id;
