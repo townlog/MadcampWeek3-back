@@ -4,15 +4,19 @@ import {
   createMusic,
   createPhoto,
   createTravel,
+  getPhotos,
 } from "../controllers/furnitures.js";
 import { authChecker } from "../middleware/authChecker.js";
 import { toAsyncRouter } from "../utils/errors.js";
 
 let router = toAsyncRouter(express.Router());
 
-router.post("/", authChecker, createBook);
-router.post("/", authChecker, createMusic);
-router.post("/", authChecker, createTravel);
-router.post("/", authChecker, createPhoto);
+router.post("/books", authChecker, createBook);
+router.post("/musics", authChecker, createMusic);
+router.post("/travels", authChecker, createTravel);
+router.post("/photos", authChecker, createPhoto);
+router.get("/photos", authChecker, getPhotos);
+
+
 
 export default router;
