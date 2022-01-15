@@ -48,7 +48,7 @@ export const addPhoto = async (info) => {
   return photo;
 };
 
-export const getPhotobyUser = async (user) => {
+export const getPhotoByUser = async (user) => {
   const userId = user.id;
   const photos = await client.photo.findMany({
     where: { userId },
@@ -59,4 +59,43 @@ export const getPhotobyUser = async (user) => {
     },
   });
   return photos;
+};
+
+export const getMusicByUser = async (user) => {
+  const userId = user.id;
+  const musics = await client.music.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+    },
+  });
+  return musics;
+};
+
+export const getBookByUser = async (user) => {
+  const userId = user.id;
+  const books = await client.book.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+    },
+  });
+  return books;
+};
+
+export const getTravelByUser = async (user) => {
+  const userId = user.id;
+  const travels = await client.travel.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      title: true,
+      body: true,
+    },
+  });
+  return travels;
 };
