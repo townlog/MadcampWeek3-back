@@ -269,3 +269,19 @@ export const isPhotoLike = async (userId, photoId) => {
   });
   return like !== null;
 };
+
+export const deleteDBPhoto = async (photoId) => {
+  await client.$executeRaw`DELETE FROM "Photo" WHERE id=${photoId}`;
+};
+
+export const deleteDBMusic = async (musicId) => {
+  await client.$executeRaw`DELETE FROM "Music" WHERE id=${musicId}`;
+};
+
+export const deleteDBTravel = async (travelId) => {
+  await client.$executeRaw`DELETE FROM "Travel" WHERE id=${travelId}`;
+};
+
+export const deleteDBBook = async (bookId) => {
+  await client.$executeRaw`DELETE FROM "Book" WHERE id=${bookId}`;
+};

@@ -1,8 +1,13 @@
+import client from "../client.js";
 import {
   addBook,
   addMusic,
   addPhoto,
   addTravel,
+  deleteDBBook,
+  deleteDBMusic,
+  deleteDBPhoto,
+  deleteDBTravel,
   getBookByUser,
   getMusicByUser,
   getPhotoByUser,
@@ -143,4 +148,77 @@ export const toggleLikePhoto = async (req, res) => {
   }
 
   return res.json({ status: true });
+};
+
+export const deletePhoto = async (req, res) => {
+  const userId = res.locals.user.id;
+  const photoId = req.body.photoId;
+
+  const photo = await client.photo.findUnique({
+    where: {
+      id: photoId,
+    },
+  });
+
+  if (photo?.userId === userId) {
+    await deleteDBPhoto(photoId);
+    return res.json({ status: true });
+  } else {
+    return res.json({ status: false });
+  }
+};
+
+export const deleteMusic = async (req, res) => {
+  const userId = res.locals.user.id;
+  const musicId = req.body.musicId;
+
+  const music = await client.music.findUnique({
+    where: {
+      id: musicId,
+    },
+  });
+
+  if (music?.userId === userId) {
+    await deleteDBMusic(musicId);
+    return res.json({ status: true });
+  } else {
+    return res.json({ status: false });
+  }
+};
+
+export const deleteTravel = async (req, res) => {
+  const userId = res.locals.user.id;
+  const travelId = req.body.travelId;
+
+  const travel = await client.travel.findUnique({
+    where: {
+      id: travelId,
+    },
+  });
+
+  if (travel?.userId === userId) {
+    await deleteDBTravel(travelId);
+    return res.json({ status: true });
+  } else {
+    return res.json({ status: false });
+  }
+};
+
+export const deleteBook = async (req, res) => {
+  const userId = res.locals.user.id;
+  const bookId = req.body.bookId;
+
+  const book = await client.book.findUnique({
+    where: {
+      id: bookId,
+    },
+  });
+
+
+  if (book?.userId === userId) {
+    await deleteDBBook(bookId);
+    return res.json({ status: true });
+  } else {
+    return res.json({ status: false });
+  }
 };

@@ -4,6 +4,10 @@ import {
   createMusic,
   createPhoto,
   createTravel,
+  deleteBook,
+  deleteMusic,
+  deletePhoto,
+  deleteTravel,
   getBooks,
   getMusics,
   getPhotos,
@@ -32,5 +36,10 @@ router.post("/books/like", authChecker, toggleLikeBook);
 router.post("/musics/like", authChecker, toggleLikeMusic);
 router.post("/travels/like", authChecker, toggleLikeTravel);
 router.post("/photos/like", authChecker, toggleLikePhoto);
+
+router.delete("/books", authChecker, deleteBook);
+router.delete("/musics", authChecker, deleteMusic);
+router.delete("/travels", authChecker, deleteTravel);
+router.delete("/photos", authChecker, deletePhoto);
 
 export default router;
