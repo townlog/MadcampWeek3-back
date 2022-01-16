@@ -11,11 +11,15 @@ export const loginUser = async (req, res) => {
 
   const user = await getUserByLogin({ loginId });
 
+  if (!user) {
+    return res.json({ status: false, register: false });
+  }
+
   if (await bcrypt.compare(loginPw, user?.loginPw)) {
     const jwt = issueJWT(user.id);
     res.json({ status: true, ...jwt });
   } else {
-    res.json({ register: false });
+    res.json({ status: false });
   }
 };
 
