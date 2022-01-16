@@ -35,24 +35,48 @@ export const createPhoto = async (req, res) => {
 
 export const getBooks = async (req, res) => {
   const user = res.locals.user;
-  const books = await getBookByUser(user);
-  res.json({ status: true, books });
+  const userId = req.query.userId;
+  if (userId) {
+    const books = await getBookByUser({ id: parseInt(userId) });
+    res.json({ status: true, books });
+  } else {
+    const books = await getBookByUser(user);
+    res.json({ status: true, books });
+  }
 };
 
 export const getMusics = async (req, res) => {
   const user = res.locals.user;
-  const musics = await getMusicByUser(user);
-  res.json({ status: true, musics });
+  const userId = req.query.userId;
+  if (userId) {
+    const musics = await getMusicByUser({ id: parseInt(userId) });
+    res.json({ status: true, musics });
+  } else {
+    const musics = await getMusicByUser(user);
+    res.json({ status: true, musics });
+  }
 };
 
 export const getTravels = async (req, res) => {
   const user = res.locals.user;
-  const travels = await getTravelByUser(user);
-  res.json({ status: true, travels });
+  const userId = req.query.userId;
+  if (userId) {
+    const travels = await getTravelByUser({ id: parseInt(userId) });
+    res.json({ status: true, travels });
+  } else {
+    const travels = await getTravelByUser(user);
+    res.json({ status: true, travels });
+  }
 };
 
 export const getPhotos = async (req, res) => {
   const user = res.locals.user;
-  const photos = await getPhotoByUser(user);
-  res.json({ status: true, photos });
+  const userId = req.query.userId;
+  if (userId) {
+    const photos = await getPhotoByUser({ id: parseInt(userId) });
+    res.json({ status: true, photos });
+  } else {
+    const photos = await getPhotoByUser(user);
+    res.json({ status: true, photos });
+  }
 };
