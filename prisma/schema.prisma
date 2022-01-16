@@ -49,7 +49,7 @@ model Book {
 
 model BookLike {
   user   User @relation(fields: [userId], references: [id])
-  book   Book @relation(fields: [bookId], references: [id])
+  book   Book @relation(fields: [bookId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId Int
   bookId Int
 
@@ -67,7 +67,7 @@ model Music {
 
 model MusicLike {
   user    User  @relation(fields: [userId], references: [id])
-  music   Music @relation(fields: [musicId], references: [id])
+  music   Music @relation(fields: [musicId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId  Int
   musicId Int
 
@@ -85,7 +85,7 @@ model Travel {
 
 model TravelLike {
   user     User   @relation(fields: [userId], references: [id])
-  travel   Travel @relation(fields: [travelId], references: [id])
+  travel   Travel @relation(fields: [travelId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId   Int
   travelId Int
 
@@ -103,7 +103,7 @@ model Photo {
 
 model PhotoLike {
   user    User  @relation(fields: [userId], references: [id])
-  photo   Photo @relation(fields: [photoId], references: [id])
+  photo   Photo @relation(fields: [photoId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId  Int
   photoId Int
 

@@ -269,3 +269,89 @@ export const isPhotoLike = async (userId, photoId) => {
   });
   return like !== null;
 };
+
+export const deleteDBPhoto = async (photoId) => {
+  await client.$executeRaw`DELETE FROM "Photo" WHERE id=${photoId}`;
+};
+
+export const deleteDBMusic = async (musicId) => {
+  await client.$executeRaw`DELETE FROM "Music" WHERE id=${musicId}`;
+};
+
+export const deleteDBTravel = async (travelId) => {
+  await client.$executeRaw`DELETE FROM "Travel" WHERE id=${travelId}`;
+};
+
+export const deleteDBBook = async (bookId) => {
+  await client.$executeRaw`DELETE FROM "Book" WHERE id=${bookId}`;
+=======
+    },
+  });
+};
+export const likePhoto = async (userId, photoId) => {
+  await client.photoLike.create({
+    data: {
+      userId,
+      photoId,
+    },
+  });
+};
+
+export const unLikePhoto = async (userId, photoId) => {
+  await client.photoLike.delete({
+    where: {
+      userId_photoId: {
+        userId,
+        photoId,
+      },
+    },
+  });
+};
+
+export const isBookLike = async (userId, bookId) => {
+  const like = await client.bookLike.findUnique({
+    where: {
+      userId_bookId: {
+        userId,
+        bookId,
+      },
+    },
+  });
+  return like !== null;
+};
+
+export const isMusicLike = async (userId, musicId) => {
+  const like = await client.musicLike.findUnique({
+    where: {
+      userId_musicId: {
+        userId,
+        musicId,
+      },
+    },
+  });
+  return like !== null;
+};
+
+export const isTravelLike = async (userId, travelId) => {
+  const like = await client.travelLike.findUnique({
+    where: {
+      userId_travelId: {
+        userId,
+        travelId,
+      },
+    },
+  });
+  return like !== null;
+};
+
+export const isPhotoLike = async (userId, photoId) => {
+  const like = await client.photoLike.findUnique({
+    where: {
+      userId_photoId: {
+        userId,
+        photoId,
+      },
+    },
+  });
+  return like !== null;
+};
