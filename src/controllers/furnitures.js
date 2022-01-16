@@ -7,6 +7,18 @@ import {
   getMusicByUser,
   getPhotoByUser,
   getTravelByUser,
+  isBookLike,
+  isMusicLike,
+  isPhotoLike,
+  isTravelLike,
+  likeBook,
+  likeMusic,
+  likePhoto,
+  likeTravel,
+  unLikeBook,
+  unLikeMusic,
+  unLikePhoto,
+  unLikeTravel,
 } from "../utils/furnitures.js";
 
 export const createBook = async (req, res) => {
@@ -79,4 +91,56 @@ export const getPhotos = async (req, res) => {
     const photos = await getPhotoByUser(user);
     res.json({ status: true, photos });
   }
+};
+
+export const toggleLikeBook = async (req, res) => {
+  const userId = res.locals.user.id;
+  const bookId = req.body.bookId;
+
+  if (await isBookLike(userId, bookId)) {
+    await unLikeBook(userId, bookId);
+  } else {
+    await likeBook(userId, bookId);
+  }
+
+  return res.json({ status: true });
+};
+
+export const toggleLikeMusic = async (req, res) => {
+  const userId = res.locals.user.id;
+  const musicId = req.body.musicId;
+
+  if (await isMusicLike(userId, musicId)) {
+    await unLikeMusic(userId, musicId);
+  } else {
+    await likeMusic(userId, musicId);
+  }
+
+  return res.json({ status: true });
+};
+
+export const toggleLikeTravel = async (req, res) => {
+  const userId = res.locals.user.id;
+  const travelId = req.body.travelId;
+
+  if (await isTravelLike(userId, travelId)) {
+    await unLikeTravel(userId, travelId);
+  } else {
+    await likeTravel(userId, travelId);
+  }
+
+  return res.json({ status: true });
+};
+
+export const toggleLikePhoto = async (req, res) => {
+  const userId = res.locals.user.id;
+  const photoId = req.body.photoId;
+
+  if (await isPhotoLike(userId, photoId)) {
+    await unLikePhoto(userId, photoId);
+  } else {
+    await likePhoto(userId, photoId);
+  }
+
+  return res.json({ status: true });
 };
