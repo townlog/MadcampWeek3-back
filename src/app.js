@@ -1,13 +1,25 @@
 import express from "express";
 import morgan from "morgan";
-import { Server } from 'socket.io';
+import { Server } from "socket.io";
 import cors from "cors";
 import userRouter from "./routes/users.js";
 import friendRouter from "./routes/friends.js";
 import furnitureRouter from "./routes/furnitures.js";
 import { issueJWT } from "./utils/users.js";
+import { createServer } from "http";
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: { origin: "*", methods: ["GET", "POST"] },
+});
+
+io.on("connection", (socket) => {
+  socket.on("roomjoin", (userid) => {
+    console.log(userid);
+    socket.join(userid);
+  });
+});
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -27,6 +39,6 @@ app.post("", async (req, res) => {
   res.json({ status: false });
 });
 
-app.listen(5000, () => {
+httpServer.listen(5000, () => {
   console.log(`Server is on http://localhost:5000`);
 });
