@@ -44,6 +44,9 @@ export const addPhoto = async (info) => {
       title,
       body,
     },
+    select: {
+      id: true,
+    },
   });
   return photo;
 };
@@ -63,6 +66,12 @@ export const getPhotoByUser = async (user) => {
               nickname: true,
             },
           },
+        },
+      },
+      images: {
+        select: {
+          id: true,
+          image: true,
         },
       },
     },
