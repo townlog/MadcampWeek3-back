@@ -46,7 +46,19 @@ export const createTravel = async (req, res) => {
 
 export const createPhoto = async (req, res) => {
   const userId = res.locals.user.id;
-  const photo = await addPhoto({ userId, ...req.body });
+  const { title, body } = req.body;
+
+  const photo = await addPhoto({ userId, title, body });
+  const photoId = photo.id;
+  req.files.forEach(async (e) => {
+    const image = e.location;
+    await client.photoImage.create({
+      data: {
+        photoId,
+        image,
+      },
+    });
+  });
   res.json({ status: true, photo });
 };
 
@@ -213,7 +225,6 @@ export const deleteBook = async (req, res) => {
       id: bookId,
     },
   });
-
 
   if (book?.userId === userId) {
     await deleteDBBook(bookId);

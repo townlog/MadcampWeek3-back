@@ -93,12 +93,13 @@ model TravelLike {
 }
 
 model Photo {
-  id     Int         @id @default(autoincrement())
-  user   User        @relation(fields: [userId], references: [id])
+  id     Int          @id @default(autoincrement())
+  user   User         @relation(fields: [userId], references: [id])
   userId Int
-  title  String      @db.VarChar(100)
-  body   String      @db.Text
+  title  String       @db.VarChar(100)
+  body   String       @db.Text
   likes  PhotoLike[]
+  images PhotoImage[]
 }
 
 model PhotoLike {
@@ -108,4 +109,11 @@ model PhotoLike {
   photoId Int
 
   @@id([userId, photoId])
+}
+
+model PhotoImage {
+  id      Int    @id @default(autoincrement())
+  photo   Photo  @relation(fields: [photoId], references: [id])
+  photoId Int
+  image   String
 }
