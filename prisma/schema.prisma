@@ -26,6 +26,7 @@ model User {
   musicLike       MusicLike[]
   travelLike      TravelLike[]
   photoLike       PhotoLike[]
+  todos           ToDo[]
 }
 
 model Friend {
@@ -116,4 +117,13 @@ model PhotoImage {
   photo   Photo  @relation(fields: [photoId], references: [id])
   photoId Int
   image   String
+}
+
+model ToDo {
+  id     Int      @id @default(autoincrement())
+  user   User     @relation(fields: [userId], references: [id])
+  date   DateTime @db.Date
+  quest  String
+  userId Int
+  finish Boolean  @default(false)
 }
