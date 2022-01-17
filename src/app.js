@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import { Server } from 'socket.io';
 import cors from "cors";
 import userRouter from "./routes/users.js";
 import friendRouter from "./routes/friends.js";
