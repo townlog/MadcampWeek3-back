@@ -76,6 +76,7 @@ export const acceptFriendRequest = async (req, res) => {
 };
 
 export const searchUser = async (req, res) => {
+  const userId = res.locals.user.id;
   const userNickName = res.locals.user.nickname;
   const nickname = req.body.nickname;
   if (nickname == null || userNickName === nickname) {
@@ -86,6 +87,33 @@ export const searchUser = async (req, res) => {
   if (!friend) {
     return res.json({ status: false });
   }
+  const request1 = await client.friend.findUnique({
+    where: {
+      userId_friendId: {
+        userId,
+        friendId: friend.id,
+      },
+    },
+    select: {
+      accept: true,
+    },
+  });
 
-  return res.json({ status: true, user: friend });
+  const request2 = await client.friend.findUnique({
+    where: {
+      userId_friendId: {
+        userId: friend.id,
+        friendId: userId,
+      },
+    },
+    select: {
+      accept: true,
+    },
+  });
+
+  return res.json({
+    status: true,
+    user: friend,
+    accept: request1 === null && request2 === null,
+  });
 };
