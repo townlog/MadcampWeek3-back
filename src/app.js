@@ -15,9 +15,17 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("roomjoin", (userid) => {
-    console.log(userid);
-    socket.join(userid);
+  socket.on("join", ({ user, roomId }) => {
+    if (user?.id === undefined || roomId === undefined) {
+      return;
+    }
+    socket.join(roomId);
+  });
+
+  socket.on("send", ({ user, roomId, message }) => {
+    socket.broadcast
+      .to(roomId)
+      .emit("receive", { user, message, createdAt: Date.now().toString() });
   });
 });
 
