@@ -63,7 +63,9 @@ export const getPhotoByUser = async (user) => {
         select: {
           user: {
             select: {
+              id: true,
               nickname: true,
+              houseName: true,
             },
           },
         },
@@ -77,7 +79,7 @@ export const getPhotoByUser = async (user) => {
     },
   });
   return photos.map((e) => {
-    return { ...e, likes: e.likes.map((it) => it.user.nickname) };
+    return { ...e, likes: e.likes.map((it) => it.user) };
   });
 };
 
@@ -93,7 +95,9 @@ export const getMusicByUser = async (user) => {
         select: {
           user: {
             select: {
+              id: true,
               nickname: true,
+              houseName: true,
             },
           },
         },
@@ -101,7 +105,7 @@ export const getMusicByUser = async (user) => {
     },
   });
   return musics.map((e) => {
-    return { ...e, likes: e.likes.map((it) => it.user.nickname) };
+    return { ...e, likes: e.likes.map((it) => it.user) };
   });
 };
 
@@ -117,7 +121,9 @@ export const getBookByUser = async (user) => {
         select: {
           user: {
             select: {
+              id: true,
               nickname: true,
+              houseName: true,
             },
           },
         },
@@ -125,7 +131,7 @@ export const getBookByUser = async (user) => {
     },
   });
   return books.map((e) => {
-    return { ...e, likes: e.likes.map((it) => it.user.nickname) };
+    return { ...e, likes: e.likes.map((it) => it.user) };
   });
 };
 
@@ -141,7 +147,9 @@ export const getTravelByUser = async (user) => {
         select: {
           user: {
             select: {
+              id: true,
               nickname: true,
+              houseName: true,
             },
           },
         },
@@ -149,7 +157,7 @@ export const getTravelByUser = async (user) => {
     },
   });
   return travels.map((e) => {
-    return { ...e, likes: e.likes.map((it) => it.user.nickname) };
+    return { ...e, likes: e.likes.map((it) => it.user) };
   });
 };
 
