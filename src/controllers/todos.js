@@ -8,7 +8,9 @@ export const getTodosByDate = async (req, res) => {
   const userId = req.query?.userId ? req.query.userId : res.locals.user.id;
   const { date } = req.query;
 
-  const todos = await getTodosByDateDB(userId, date);
+  console.log(`userId`, userId);
+
+  const todos = await getTodosByDateDB(parseInt(userId), date);
 
   res.json({ status: true, todos });
 };
