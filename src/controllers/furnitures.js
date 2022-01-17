@@ -233,3 +233,45 @@ export const deleteBook = async (req, res) => {
     return res.json({ status: false });
   }
 };
+
+export const isLikedPhoto = async (req, res) => {
+  const userId = res.locals.user.id;
+  const photoId = req.query.id;
+
+  if (photoId) {
+    return res.json({
+      status: true,
+      liked: await isPhotoLike(userId, parseInt(photoId)),
+    });
+  }
+
+  return res.json({ status: false });
+};
+
+export const isLikedMusic = async (req, res) => {
+  const userId = res.locals.user.id;
+  const musicId = req.query.id;
+
+  if (musicId) {
+    return res.json({
+      status: true,
+      liked: await isMusicLike(userId, parseInt(musicId)),
+    });
+  }
+
+  return res.json({ status: false });
+};
+
+export const isLikedBook = async (req, res) => {
+  const userId = res.locals.user.id;
+  const bookId = req.query.id;
+
+  if (bookId) {
+    return res.json({
+      status: true,
+      liked: await isBookLike(userId, parseInt(bookId)),
+    });
+  }
+
+  return res.json({ status: false });
+};

@@ -12,6 +12,9 @@ import {
   getMusics,
   getPhotos,
   getTravels,
+  isLikedBook,
+  isLikedMusic,
+  isLikedPhoto,
   toggleLikeBook,
   toggleLikeMusic,
   toggleLikePhoto,
@@ -26,17 +29,16 @@ let router = express.Router();
 router.post("/books", authChecker, wrapAsync(createBook));
 router.post("/musics", authChecker, wrapAsync(createMusic));
 router.post("/travels", authChecker, wrapAsync(createTravel));
-router.post(
-  "/photos",
-  authChecker,
-  uploadFile,
-  wrapAsync(createPhoto)
-);
+router.post("/photos", authChecker, uploadFile, wrapAsync(createPhoto));
 
 router.get("/books", authChecker, wrapAsync(getBooks));
 router.get("/musics", authChecker, wrapAsync(getMusics));
 router.get("/travels", authChecker, wrapAsync(getTravels));
 router.get("/photos", authChecker, wrapAsync(getPhotos));
+
+router.get("/photos/like", authChecker, wrapAsync(isLikedPhoto));
+router.get("/musics/like", authChecker, wrapAsync(isLikedMusic));
+router.get("/books/like", authChecker, wrapAsync(isLikedBook));
 
 router.post("/books/like", authChecker, wrapAsync(toggleLikeBook));
 router.post("/musics/like", authChecker, wrapAsync(toggleLikeMusic));
