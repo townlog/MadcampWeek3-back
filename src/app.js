@@ -5,6 +5,7 @@ import cors from "cors";
 import userRouter from "./routes/users.js";
 import friendRouter from "./routes/friends.js";
 import furnitureRouter from "./routes/furnitures.js";
+import todoRouter from "./routes/todos.js";
 import { issueJWT } from "./utils/users.js";
 import { createServer } from "http";
 
@@ -35,6 +36,7 @@ app.use(cors());
 app.use("/users", userRouter);
 app.use("/friends", friendRouter);
 app.use("/furnitures", furnitureRouter);
+app.use("/todos", todoRouter);
 
 app.post("", async (req, res) => {
   const { id, password } = req.body;
