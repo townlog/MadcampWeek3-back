@@ -86,3 +86,55 @@ export const sendMessage = async ({ userId, friendId, roomId, payload }) => {
 
   return roomId;
 };
+
+export const seeRoomDB = async (userId, roomId) => {
+  const room = await client.room.findFirst({
+    where: {
+      id: roomId,
+      users: {
+        some: {
+          id: userId,
+        },
+      },
+    },
+    include: {
+      users: {
+        select: {
+          id: true,
+          nickname: true,
+        },
+      },
+      messages: {
+        select: {
+          user: {
+            select: {
+              id: true,
+              nickname: true,
+            },
+          },
+          payload: true,
+          createdAt: true,
+        },
+      },
+    },
+  });
+  return room;
+};
+
+export const getRoomsByUserId = (userId) => {
+  return client.room.findMany({
+    where: {
+      users: {
+        some: { id: userId },
+      },
+    },
+    include: {
+      users: {
+        select: {
+          id: true,
+          nickname: true,
+        },
+      },
+    },
+  });
+};
