@@ -6,8 +6,10 @@ import userRouter from "./routes/users.js";
 import friendRouter from "./routes/friends.js";
 import furnitureRouter from "./routes/furnitures.js";
 import todoRouter from "./routes/todos.js";
+import chatRouter from "./routes/chat.js";
 import { issueJWT } from "./utils/users.js";
 import { createServer } from "http";
+import { isChamyeoRoom, sendMessage } from "./utils/chat.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -17,16 +19,19 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   socket.on("join", ({ user, roomId }) => {
+    console.log("initjoin");
     if (user?.id === undefined || roomId === undefined) {
       return;
     }
+
     socket.join(roomId);
   });
 
-  socket.on("send", ({ user, roomId, message }) => {
+  socket.on("send", ({ user, roomId, payload }) => {
     socket.broadcast
       .to(roomId)
-      .emit("receive", { user, message, createdAt: Date.now().toString() });
+      .emit("receive", { user, payload, createdAt: Date.now().toString() });
+    sendMessage({ userId: user.id, roomId, payload });
   });
 });
 
@@ -37,6 +42,7 @@ app.use("/users", userRouter);
 app.use("/friends", friendRouter);
 app.use("/furnitures", furnitureRouter);
 app.use("/todos", todoRouter);
+app.use("/chat", chatRouter);
 
 app.post("", async (req, res) => {
   const { id, password } = req.body;
