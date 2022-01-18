@@ -115,6 +115,9 @@ export const seeRoomDB = async (userId, roomId) => {
           payload: true,
           createdAt: true,
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       },
     },
   });
