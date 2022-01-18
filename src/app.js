@@ -19,12 +19,12 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   socket.on("join", ({ user, roomId }) => {
+    console.log("initjoin");
     if (user?.id === undefined || roomId === undefined) {
       return;
     }
-    if (isChamyeoRoom({ userId: user.id, roomId })) {
-      socket.join(roomId);
-    }
+
+    socket.join(roomId);
   });
 
   socket.on("send", ({ user, roomId, payload }) => {

@@ -8,7 +8,7 @@ import {
 import { authChecker } from "../middleware/authChecker.js";
 import { toAsyncRouter } from "../utils/errors.js";
 
-let router = toAsyncRouter(express.Router());
+let router = express.Router();
 
 router.get("/", authChecker, getRoomId);
 router.get("/rooms/:id", authChecker, seeRoom);
