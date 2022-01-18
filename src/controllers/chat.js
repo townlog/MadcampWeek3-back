@@ -1,3 +1,4 @@
+import e from "express";
 import {
   getRoomIdDB,
   getRoomsByUserId,
@@ -51,5 +52,14 @@ export const getMyRooms = async (req, res) => {
 
   const rooms = await getRoomsByUserId(userId);
 
-  return res.json({ status: true, rooms });
+  const ret = rooms.map((e) => {
+    return { ...e, user: e.users.find((it) => it.id !== userId) };
+  });
+
+  ret.forEach((e) => delete e["users"]);
+
+  return res.json({
+    status: true,
+    rooms: ret,
+  });
 };
